@@ -29,7 +29,6 @@ public class App {
     }
 
     public static void main(String[] args) {
-        // Sample implementation for 5 students could be added here for CLI interaction
         System.out.println("Student Performance Analytics System Initialized.");
     }
 }
