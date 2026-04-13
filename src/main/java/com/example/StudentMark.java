@@ -1,47 +1,32 @@
-package com.example;
+package com.analytics.system;
 
-import java.util.ArrayList;
-import java.util.List;
+public class StudentMark {
+    private String subjectName;
+    private double cat;        // Max 30
+    private double assignment; // Max 20
+    private double fat;        // Max 50
 
-public class StudentAttendance {
-
-    private String name;
-    private List<Boolean> attendanceRecords;
-
-    public StudentAttendance(String name) {
-        this.name = name;
-        this.attendanceRecords = new ArrayList<>();
+    public StudentMark(String subjectName, double cat, double assignment, double fat) {
+        this.subjectName = subjectName;
+        this.cat = cat;
+        this.assignment = assignment;
+        this.fat = fat;
     }
 
-    public String getName() {
-        return name;
+    public double getTotalMarks() {
+        return cat + assignment + fat;
     }
 
-    public void addAttendanceRecord(boolean present) {
-        attendanceRecords.add(present);
+    public String getGrade() {
+        double total = getTotalMarks();
+        if (total >= 90) return "S";
+        if (total >= 80) return "A";
+        if (total >= 70) return "B";
+        if (total >= 60) return "C";
+        if (total >= 50) return "D";
+        return "F";
     }
 
-    public int getAttendancePercentage() {
-        if (attendanceRecords.isEmpty()) return 0;
-
-        int presentDays = 0;
-        for (boolean record : attendanceRecords) {
-            if (record) {
-                presentDays++;
-            }
-        }
-
-        return (presentDays * 100) / attendanceRecords.size();
-    }
-
-    public boolean isEligibleForExam() {
-        return getAttendancePercentage() >= 75;
-    }
-
-    public String getWarningSignal() {
-        int percentage = getAttendancePercentage();
-        if (percentage < 50) return "Critical Warning !!";
-        if (percentage < 75) return "Low Attendance !!";
-        return "Good Attendance, Well Done";
-    }
+    // Getters
+    public String getSubjectName() { return subjectName; }
 }

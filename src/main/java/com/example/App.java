@@ -1,34 +1,35 @@
-package com.example;
+package com.analytics.system;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class App {
+    
+    public static double calculateGPA(List<StudentMark> marks) {
+        if (marks == null || marks.isEmpty()) return 0.0;
+        double totalSum = 0;
+        for (StudentMark mark : marks) {
+            totalSum += mark.getTotalMarks();
+        }
+        // Assuming GPA is Total Average / 10
+        return (totalSum / marks.size()) / 10.0;
+    }
+
+    public static String identifyTopper(Map<String, List<StudentMark>> studentData) {
+        String topper = "";
+        double highestGPA = -1.0;
+
+        for (Map.Entry<String, List<StudentMark>> entry : studentData.entrySet()) {
+            double currentGPA = calculateGPA(entry.getValue());
+            if (currentGPA > highestGPA) {
+                highestGPA = currentGPA;
+                topper = entry.getKey();
+            }
+        }
+        return topper;
+    }
 
     public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter student name: ");
-        String name = scanner.nextLine();
-
-        StudentAttendance student = new StudentAttendance(name);
-
-        System.out.print("Enter number of days: ");
-        int numDays = scanner.nextInt();
-
-        for (int i = 0; i < numDays; i++) {
-            System.out.print("Day " + (i + 1) + " (1 = Present, 0 = Absent): ");
-            int input = scanner.nextInt();
-            student.addAttendanceRecord(input == 1);
-        }
-
-        System.out.println("\n--- Report ---");
-        System.out.println("Student: " + student.getName());
-        System.out.println("Attendance: " + student.getAttendancePercentage() + "%");
-        System.out.println("Eligibility: " +
-                (student.isEligibleForExam() ? "Eligible" : "Not Eligible"));
-        System.out.println("Status: " + student.getWarningSignal());
-
-        scanner.close();
+        // Sample implementation for 5 students could be added here for CLI interaction
+        System.out.println("Student Performance Analytics System Initialized.");
     }
 }
